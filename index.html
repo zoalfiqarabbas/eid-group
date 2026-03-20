@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Eid Mubarak</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: monospace;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* stars */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* main title */
+h1 {
+  margin-top: 60px;
+  font-size: 60px;
+  letter-spacing: 10px;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* name display */
+#name {
+  font-size: 40px;
+  margin-top: 40px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+/* heart */
+.heart {
+  font-size: 80px;
+  margin-top: 20px;
+  opacity: 0;
+  animation: beat 1.2s infinite;
+}
+
+@keyframes beat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* message */
+#message {
+  margin-top: 30px;
+  font-size: 22px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transition: opacity 1s;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<h1>EID MUBARAK ✨</h1>
+
+<div id="name"></div>
+
+<div class="heart" id="heart">❤️</div>
+
+<div id="message">
+You guys are genuinely good people.<br><br>
+Glad I got to know you.<br><br>
+Stay the same ✨<br><br>
+— Zoalfiqar
+</div>
+
+<script>
+// ⭐ stars
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+for (let i = 0; i < 150; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2
+  });
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+  stars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
+function updateStars() {
+  stars.forEach(s => {
+    s.y += 0.25;
+    if (s.y > canvas.height) s.y = 0;
+  });
+}
+
+function animate() {
+  drawStars();
+  updateStars();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// names animation
+const names = [
+"Hasan",
+"Ali",
+"Haidar",
+"Leith",
+"Shahd",
+"Lora",
+"Khalil",
+"Safaa",
+"Jafar",
+"Malak",
+"Souliman"
+];
+
+let i = 0;
+const nameDiv = document.getElementById("name");
+
+function showNames() {
+  if (i < names.length) {
+    nameDiv.style.opacity = 0;
+    setTimeout(() => {
+      nameDiv.innerText = names[i];
+      nameDiv.style.opacity = 1;
+    }, 200);
+
+    i++;
+    setTimeout(showNames, 900);
+  } else {
+    document.getElementById("heart").style.opacity = 1;
+    setTimeout(() => {
+      document.getElementById("message").style.opacity = 1;
+    }, 1000);
+  }
+}
+
+setTimeout(showNames, 2000);
+</script>
+
+</body>
+</html>
